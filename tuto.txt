@@ -1,0 +1,112 @@
+L'idée c'est de mettre à jour le fichier index.html : 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Connexion</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Connexion</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Abonnement</th>
+          <th>Nom</th>
+          <th>Date</th>
+          <th>Équipe</th>
+          <th>Commentaires</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <!-- Les données seront générées dynamiquement ici -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+Et aussi mettre à jour le fichier script.js  : 
+
+// Récupérer les données de la base de données (remplacez cette partie par votre code pour récupérer les données depuis MongoDB)
+const data = [
+  { id: 1, abonnement: "Abonnement 1", nom: "Client 1", date: "2023-05-01", equipe: "Equipe 1", commentaires: "Commentaires 1" },
+  { id: 2, abonnement: "Abonnement 2", nom: "Client 2", date: "2023-05-02", equipe: "Equipe 2", commentaires: "Commentaires 2" },
+  { id: 3, abonnement: "Abonnement 3", nom: "Client 3", date: "2023-05-03", equipe: "Equipe 3", commentaires: "Commentaires 3" }
+];
+
+// Générer les lignes de la table avec les boutons "Valider" et "Rejeter"
+const tableBody = document.getElementById("table-body");
+
+data.forEach(entry => {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${entry.id}</td>
+    <td>${entry.nom}</td>
+    <td>${entry.date}</td>
+    <td>${entry.equipe}</td>
+    <td>${entry.commentaires}</td>
+    <td>
+      <button class="valider-btn" data-id="${entry.id}">Valider</button>
+      <button class="rejeter-btn" data-id="${entry.id}">Rejeter</button>
+    </td>
+  `;
+
+  tableBody.appendChild(row);
+});
+
+// Ajouter des écouteurs d'événements pour les boutons "Valider" et "Rejeter"
+tableBody.addEventListener("click", (event) => {
+  const target = event.target;
+  
+  if (target.classList.contains("valider-btn")) {
+    const id = parseInt(target.getAttribute("data-id"), 10);
+   
+// ...
+
+// Ajouter des écouteurs d'événements pour les boutons "Valider" et "Rejeter"
+tableBody.addEventListener("click", (event) => {
+  const target = event.target;
+  
+  if (target.classList.contains("valider-btn")) {
+    const id = parseInt(target.getAttribute("data-id"), 10);
+    const entry = data.find(item => item.id === id);
+
+    // Déplacer l'entrée vers la table "Valide"
+    validerAbonnement(entry);
+    removeTableRow(target);
+  }
+
+  if (target.classList.contains("rejeter-btn")) {
+    const id = parseInt(target.getAttribute("data-id"), 10);
+    const entry = data.find(item => item.id === id);
+
+    // Déplacer l'entrée vers la table "Refuse"
+    rejeterAbonnement(entry);
+    removeTableRow(target);
+  }
+});
+
+// Fonction pour déplacer l'entrée vers la table "Valide"
+function validerAbonnement(entry) {
+  // Code pour déplacer l'entrée vers la table "Valide" dans la base de données (remplacez cette partie par votre code pour mettre à jour MongoDB)
+  console.log("Abonnement validé :", entry);
+}
+
+// Fonction pour déplacer l'entrée vers la table "Refuse"
+function rejeterAbonnement(entry) {
+  // Code pour déplacer l'entrée vers la table "Refuse" dans la base de données (remplacez cette partie par votre code pour mettre à jour MongoDB)
+  console.log("Abonnement rejeté :", entry);
+}
+
+// Fonction pour supprimer la ligne de la table
+function removeTableRow(button) {
+  const row = button.closest("tr");
+  row.remove();
+}
+
