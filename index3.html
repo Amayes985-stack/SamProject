@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interface de gestion d'abonnements</title>
+  <style>
+    /* Styles généraux */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    /* Styles du tableau */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    td {
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* Styles des boutons */
+    .button {
+      display: inline-block;
+      padding: 8px 16px;
+      margin-right: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+
+    /* Styles spécifiques aux tables */
+    .table-container {
+      margin-top: 20px;
+    }
+
+    .table-container table {
+      margin-bottom: 20px;
+    }
+
+    /* Styles spécifiques aux tables affichées */
+    .show {
+      display: block;
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Liste des Rendez-vous</h1>
+
+  <div class="button-container">
+    <button class="button" onclick="showTable('attenteTable')">Attente</button>
+    <button class="button" onclick="showTable('validatedTable')">Valide</button>
+    <button class="button" onclick="showTable('refuseTable')">Refuse</button>
+  </div>
+
+  <div class="table-container">
+    <table id="attenteTable" class="show">
+      <!-- Tableau des abonnements en attente -->
+      <thead>
+        <tr>
+          <th>ID abonnement</th>
+          <th>Nom</th>
+          <th>Date</th>
+          <th>Equipe</th>
+          <th>Commentaires</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Remplir cette table avec les données de votre base de données -->
+        <tr>
+          <td>1</td>
+          <td>Rayane Aklude</td>
+          <td>2023-04-20</td>
+          <td>Equipe A</td>
+          <td>Commentaire 1</td>
+          <td class="actions">
+            <button onclick="moveToValidated(this.parentNode.parentNode)">Valider</button>
+            <button onclick="moveToNonValidated(this.parentNode.parentNode)">Rejeter</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Rayan Airbag</td>
+          <td>2023-04-20</td>
+          <td>Equipe A</td>
+          <td>Commentaire 1</td>
+          <td class="actions">
+           
+            <button onclick="moveToValidated(this.parentNode.parentNode)">Valider</button>
+            <button onclick="moveToNonValidated(this.parentNode.parentNode)">Rejeter</button>
+          </td>
+        </tr>
+        <!-- Ajoutez d'autres lignes de données ici -->
+      </tbody>
+    </table>
+
+    <table id="validatedTable" class="hide">
+      <!-- Tableau des abonnements validés -->
+      <thead>
+        <tr>
+          <th>ID abonnement</th>
+          <th>Nom</th>
+          <th>Date</th>
+          <th>Equipe</th>
+          <th>Commentaires</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Remplir cette table avec les abonnements validés -->
+      </tbody>
+    </table>
+
+    <table id="refuseTable" class="hide">
+      <!-- Tableau des abonnements refusés -->
+      <thead>
+        <tr>
+          <th>ID abonnement</th>
+          <th>Nom</th>
+          <th>Date</th>
+          <th>Equipe</th>
+          <th>Commentaires</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Remplir cette table avec les abonnements refusés -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function showTable(tableId) {
+      // Cacher toutes les tables
+      var tables = document.querySelectorAll('.table-container table');
+      for (var i = 0; i < tables.length; i++) {
+        tables[i].classList.add('hide');
+      }
+
+      // Afficher la table sélectionnée
+      document.getElementById(tableId).classList.remove('hide');
+    }
+
+    function moveToValidated(row) {
+      // Déplacer la ligne vers la table des abonnements validés
+      document.querySelector('#validatedTable tbody').appendChild(row);
+
+      // Supprimer les boutons d'action
+      row.querySelector('.actions').remove();
+    }
+
+    function moveToNonValidated(row) {
+      // Déplacer la ligne vers la table des abonnements refusés
+      document.querySelector('#refuseTable tbody').appendChild(row);
+
+      // Supprimer les boutons d'action
+      row.querySelector('.actions').remove();
+    }
+  </script>
+</body>
+</html>
